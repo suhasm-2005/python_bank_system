@@ -67,7 +67,7 @@ def Update_Acc():
     if Choice == 1:
         while True:
             phone = input("Enter the new phone number: ")
-            if len(phone) == phone and phone.isdigit():
+            if len(phone) == 10 and phone.isdigit():
                 Acc_Holder["Account_num"][idx] = phone
                 print("Phone number is updated successfully.")
                 break
@@ -76,7 +76,7 @@ def Update_Acc():
     elif Choice == 2:
         while True:
             aadhar = input("Enter the new phone number: ")
-            if len(aadhar) == aadhar and aadhar.isdigit():
+            if len(aadhar) == 10 and aadhar.isdigit():
                 Acc_Holder["Aadhar"][idx] = aadhar
                 print("Aadhar number is updated successfully.")
                 break
@@ -95,6 +95,14 @@ def show_Acc():
         print("No Accounts Holders..!")
 
 
+def Deposite():
+    pass
+
+
+def Withdraw():
+    pass
+
+
 Bank_Menu()
 while True:
 
@@ -109,5 +117,12 @@ while True:
         Update_Acc()
     elif choice == 4:
         show_Acc()
+    elif choice == 5:
+        Deposite()
+    elif choice == 6:
+        Withdraw()
+    elif choice == 7:
+        print("Thank you....!!!")
+        break
     else:
         print("Invalid choice..!")
