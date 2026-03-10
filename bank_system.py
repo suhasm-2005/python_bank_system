@@ -1,7 +1,14 @@
 import random
 import pandas as pd
 
-Acc_Holder = {"Name": [], "Age": [], "Phone": [], "Aadhar": [], "Account_num": []}
+Acc_Holder = {
+    "Name": [],
+    "Age": [],
+    "Phone": [],
+    "Aadhar": [],
+    "Account_num": [],
+    "Balance": [],
+}
 
 
 def Bank_Menu():
@@ -9,7 +16,9 @@ def Bank_Menu():
     print("2. Search Account.")
     print("3. Update Account.")
     print("4. Show all Acount Holders.")
-    print("5. Exit")
+    print("5. Deposit")
+    print("6. Withdraw")
+    print("7. Exit")
 
 
 def Create_Acc():
@@ -96,7 +105,11 @@ def show_Acc():
 
 
 def Deposite():
-    pass
+    amount = int(input("Enter the Amount to deposit: "))
+    if amount < 100:
+        print("Amount should be more than 100...!!!")
+    else:
+        Acc_Holder["Balance"].append(amount)
 
 
 def Withdraw():
@@ -107,7 +120,8 @@ Bank_Menu()
 while True:
 
     choice = int(input("Enter the choice: "))
-    if choice == 5:
+    if choice == 7:
+        print("Thank You...!!!")
         break
     elif choice == 1:
         Create_Acc()
@@ -121,8 +135,6 @@ while True:
         Deposite()
     elif choice == 6:
         Withdraw()
-    elif choice == 7:
-        print("Thank you....!!!")
-        break
+
     else:
         print("Invalid choice..!")
