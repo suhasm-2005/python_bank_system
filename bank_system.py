@@ -10,22 +10,20 @@ Acc_Holder = {
     "Balance": [],
 }
 
-
 def Bank_Menu():
     print("1. Create Bank Account.")
     print("2. Search Account.")
     print("3. Update Account.")
-    print("4. Show all Acount Holders.")
+    print("4. Show all Account Holders.")
     print("5. Deposit")
     print("6. Withdraw")
     print("7. Exit")
-
 
 def Create_Acc():
     NAME = input("Enter the name: ")
     AGE = int(input("Enter your age: "))
     while True:
-        PHONE = input("Enter yor phone number: ")
+        PHONE = input("Enter your phone number: ")
         if len(PHONE) == 10 and PHONE.isdigit():
             break
         print("Your phone number must contain only 10 digits!")
@@ -46,13 +44,13 @@ def Create_Acc():
             Acc_Holder["Phone"].append(PHONE)
             Acc_Holder["Aadhar"].append(AADHAR)
             Acc_Holder["Account_num"].append(ACC)
+            Acc_Holder["Balance"].append(0)
             print("Your Account Created Successfully!")
             print("Your Account number: ", ACC)
 
-
 def Search_Acc():
     if not Acc_Holder["Account_num"]:
-        print("No to accounts to search...!!!")
+        print("No accounts to search...!!!")
     else:
         df = pd.DataFrame(Acc_Holder)
         search_acc = int(input("enter the account number to search: "))
@@ -60,7 +58,7 @@ def Search_Acc():
         if not search.empty:
             print(search)
         else:
-            print("No such accounts..!")
+            print("No such accounts..!\n")
 
 
 def Update_Acc():
@@ -77,20 +75,20 @@ def Update_Acc():
         while True:
             phone = input("Enter the new phone number: ")
             if len(phone) == 10 and phone.isdigit():
-                Acc_Holder["Account_num"][idx] = phone
+                Acc_Holder["Phone"][idx] = phone
                 print("Phone number is updated successfully.")
                 break
             else:
                 print("Phone number must be 10 digits.")
     elif Choice == 2:
         while True:
-            aadhar = input("Enter the new phone number: ")
-            if len(aadhar) == 10 and aadhar.isdigit():
+            aadhar = input("Enter the new aadhar number: ")
+            if len(aadhar) == 12 and aadhar.isdigit():
                 Acc_Holder["Aadhar"][idx] = aadhar
                 print("Aadhar number is updated successfully.")
                 break
             else:
-                print("Aadhar number must be 10 digits.")
+                print("Aadhar number must be 12 digits.")
     else:
         print("Invalid choice..!!!")
 
@@ -98,22 +96,46 @@ def Update_Acc():
 def show_Acc():
     df1 = pd.DataFrame(Acc_Holder)
     if not df1.empty:
-        print("/nAccounts Holders: ")
+        print("\nAccounts Holders: ")
         print(df1)
     else:
         print("No Accounts Holders..!")
 
 
-def Deposite():
+def Deposit():
+    if not Acc_Holder["Account_num"]:
+        print("No accounts found...!!!")
+        return
+    acc = int(input("Enter the account number: "))
+    if acc not in Acc_Holder["Account_num"]:
+        print("No such account found..!!!")
+        return
+    idx = Acc_Holder["Account_num"].index(acc)
     amount = int(input("Enter the Amount to deposit: "))
     if amount < 100:
         print("Amount should be more than 100...!!!")
     else:
-        Acc_Holder["Balance"].append(amount)
+        Acc_Holder["Balance"][idx] += amount
+        print(f"Amount deposited successfully! New balance: {Acc_Holder['Balance'][idx]}")
 
 
 def Withdraw():
-    pass
+    if not Acc_Holder["Account_num"]:
+        print("No accounts found...!!!")
+        return
+    acc = int(input("Enter the account number: "))
+    if acc not in Acc_Holder["Account_num"]:
+        print("No such account found..!!!")
+        return
+    idx = Acc_Holder["Account_num"].index(acc)
+    amount = int(input("Enter the amount to withdraw: "))
+    if amount < 100:
+        print("Minimum withdrawal amount is 100...!!!")
+    elif Acc_Holder["Balance"][idx] < amount:
+        print("Insufficient balance...!!!")
+    else:
+        Acc_Holder["Balance"][idx] -= amount
+        print(f"Amount withdrawn successfully! New balance: {Acc_Holder['Balance'][idx]}")
 
 
 Bank_Menu()
@@ -132,9 +154,9 @@ while True:
     elif choice == 4:
         show_Acc()
     elif choice == 5:
-        Deposite()
+        Deposit()
     elif choice == 6:
         Withdraw()
 
     else:
-        print("Invalid choice..!")
+        print("Invalid choice..!\n")
